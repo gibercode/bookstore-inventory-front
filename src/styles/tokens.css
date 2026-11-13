@@ -1,0 +1,64 @@
+/* Tokens del tema "Librería de lomo". Ver DESIGN.md.
+   Solo modo claro. No hardcodear colores fuera de este archivo. */
+
+:root {
+  /* Papel y tinta */
+  --paper: #f4efe6;
+  --surface: #fbf8f2;
+  --surface-sunken: #ece5d8;
+  --ink: #1d1a16;
+  --ink-muted: #5f574c;
+  --line: rgba(40, 30, 20, 0.16);
+  --line-strong: rgba(40, 30, 20, 0.42);
+
+  /* Acción: verde botella (único color de acción) */
+  --action: #1f4d3a;
+  --action-hover: #173b2c;
+  --action-soft: #e1ebe4;
+  --on-action: #f4efe6;
+  --focus: #1f4d3a;
+
+  /* Estado de stock (siempre con texto, nunca solo color) */
+  --stock-ok: #2f6b4f;
+  --stock-ok-bg: #e1ebe4;
+  --stock-low: #8a5a00;
+  --stock-low-bg: #f1e4c4;
+  --stock-out: #9c3a22;
+  --stock-out-bg: #f2d9d0;
+
+  /* Tipografía */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-ui: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+
+  /* Escala de texto (denso, escritorio) */
+  --text-xs: 0.6875rem; /* 11 */
+  --text-sm: 0.8125rem; /* 13 */
+  --text-md: 0.875rem; /* 14 cuerpo */
+  --text-lg: 1rem; /* 16 */
+  --text-xl: 1.5rem; /* 24 */
+  --text-2xl: 2.25rem; /* 36 display */
+
+  /* Espaciado (base 4px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Forma: sin radios ni sombras */
+  --radius: 0;
+  --hairline: 1px solid var(--line);
+
+  /* Layout */
+  --sidebar-w: 220px;
+  --topbar-h: 48px;
+  --content-max: 1440px;
+
+  /* Movimiento */
+  --ease: 120ms ease-out;
+
+  color-scheme: light;
+}
