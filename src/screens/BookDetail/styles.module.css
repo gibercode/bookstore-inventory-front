@@ -62,3 +62,16 @@
   flex-direction: column;
   gap: var(--space-4);
 }
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.delete {
+  color: var(--danger);
+}
+
+.delete:hover:not(:disabled) {
+  background: var(--stock-out-bg);
+}

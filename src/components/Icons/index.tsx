@@ -135,3 +135,9 @@ export const XCircleIcon = (props: IconProps) => (
     <path d="m9 9 6 6M15 9l-6 6" />
   </Icon>
 )
+
+export const TrashIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6" />
+  </Icon>
+)

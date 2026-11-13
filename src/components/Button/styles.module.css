@@ -36,3 +36,14 @@
   border-color: var(--action-hover);
   background: var(--action-hover);
 }
+
+.danger {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: var(--on-action);
+}
+
+.danger:hover:not(:disabled) {
+  border-color: var(--danger-hover);
+  background: var(--danger-hover);
+}

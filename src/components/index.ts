@@ -2,6 +2,7 @@ export { BookFormModal } from './BookFormModal'
 export { BooksTable } from './BooksTable'
 export { Button } from './Button'
 export { Card } from './Card'
+export { ConfirmModal } from './ConfirmModal'
 export { DashboardLayout } from './DashboardLayout'
 export {
   AlertIcon,
@@ -16,6 +17,7 @@ export {
   PlusIcon,
   RefreshIcon,
   TagIcon,
+  TrashIcon,
 } from './Icons'
 export { DescriptionList } from './DescriptionList'
 export { Notice } from './Notice'

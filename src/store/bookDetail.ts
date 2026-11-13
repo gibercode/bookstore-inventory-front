@@ -16,6 +16,7 @@ type BookDetailStore = {
   fetchBook: (id: string) => Promise<void>;
   calculatePrice: () => Promise<void>;
   updateBook: (payload: BookPayload) => Promise<Book>;
+  deleteBook: () => Promise<Book>;
 };
 
 let controller: AbortController | null = null;
@@ -93,5 +94,12 @@ export const useBookDetailStore = create<BookDetailStore>((set, get) => ({
       ...(costChanged && { calculation: null, calculationStatus: "idle" }),
     });
     return updated;
+  },
+
+  // La API responde con los datos del libro eliminado.
+  deleteBook: async () => {
+    const { book } = get();
+    if (!book) throw new Error("No hay un libro cargado");
+    return fetchService.delete<Book>(`/books/${book.id}/`);
   },
 }));

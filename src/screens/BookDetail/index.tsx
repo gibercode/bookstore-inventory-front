@@ -1,19 +1,22 @@
-import { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowLeftIcon,
   BookFormModal,
   Button,
   Card,
+  ConfirmModal,
   DescriptionList,
   Notice,
   PencilIcon,
   StockBadge,
+  TrashIcon,
 } from '@/components'
 import { useDisclosure } from '@/hooks/useDisclosure'
 import { useBookDetailStore } from '@/store/bookDetail'
 import { useCategoriesStore } from '@/store/categories'
 import { toast } from '@/store/toast'
+import { ApiError } from '@/utils/fetchService'
 import { formatDateTime, formatUsd } from '@/utils/format'
 import { CalculationCard } from './components/CalculationCard'
 import { DetailSkeleton } from './components/DetailSkeleton'
@@ -22,6 +25,7 @@ import styles from './styles.module.css'
 
 export const BookDetail = () => {
   const { id = '' } = useParams()
+  const navigate = useNavigate()
 
   const book = useBookDetailStore((state) => state.book)
   const status = useBookDetailStore((state) => state.status)
@@ -34,11 +38,29 @@ export const BookDetail = () => {
   const fetchBook = useBookDetailStore((state) => state.fetchBook)
   const calculatePrice = useBookDetailStore((state) => state.calculatePrice)
   const updateBook = useBookDetailStore((state) => state.updateBook)
+  const deleteBook = useBookDetailStore((state) => state.deleteBook)
 
   const categoriesStatus = useCategoriesStore((state) => state.status)
   const fetchCategories = useCategoriesStore((state) => state.fetchCategories)
 
   const editModal = useDisclosure()
+  const deleteModal = useDisclosure()
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleDelete = async () => {
+    setIsDeleting(true)
+    try {
+      const deleted = await deleteBook()
+      toast.success(`Libro «${deleted.title}» eliminado.`)
+      void navigate('/')
+    } catch (error) {
+      setIsDeleting(false)
+      deleteModal.close()
+      toast.error(
+        error instanceof ApiError ? error.message : 'No se pudo eliminar el libro',
+      )
+    }
+  }
 
   useEffect(() => {
     void fetchBook(id)
@@ -84,13 +106,19 @@ export const BookDetail = () => {
               <p className={styles.subtitle}>{book.author}</p>
             </div>
             {/* El formulario necesita las categorías para preseleccionar la del libro. */}
-            <Button
-              onClick={editModal.open}
-              disabled={categoriesStatus !== 'success'}
-            >
-              <PencilIcon size={16} />
-              Editar
-            </Button>
+            <div className={styles.actions}>
+              <Button
+                onClick={editModal.open}
+                disabled={categoriesStatus !== 'success'}
+              >
+                <PencilIcon size={16} />
+                Editar
+              </Button>
+              <Button className={styles.delete} onClick={deleteModal.open}>
+                <TrashIcon size={16} />
+                Eliminar
+              </Button>
+            </div>
           </header>
 
 
@@ -132,6 +160,19 @@ export const BookDetail = () => {
           </div>
 
           {calculation && <CalculationCard calculation={calculation} />}
+
+          {deleteModal.isOpen && (
+            <ConfirmModal
+              title="¿Eliminar este libro?"
+              confirmLabel="Eliminar"
+              loading={isDeleting}
+              onConfirm={() => void handleDelete()}
+              onClose={deleteModal.close}
+            >
+              Se eliminará «{book.title}» (ISBN {book.isbn}) de forma permanente.
+              Esta acción no se puede deshacer.
+            </ConfirmModal>
+          )}
 
           {editModal.isOpen && (
             <BookFormModal

@@ -25,6 +25,10 @@
   --on-action: #ffffff;
   --focus: #059669;
 
+  /* Acciones destructivas */
+  --danger: #b91c1c;
+  --danger-hover: #991b1b;
+
   /* Estado de stock (siempre con texto, nunca solo color) */
   --stock-ok: #15803d;
   --stock-ok-bg: #dcfce7;

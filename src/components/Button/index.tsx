@@ -1,9 +1,9 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ComponentProps } from 'react'
 import { Spinner } from '../Spinner'
 import styles from './styles.module.css'
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'ghost'
+type ButtonProps = ComponentProps<'button'> & {
+  variant?: 'primary' | 'danger' | 'ghost'
   loading?: boolean
 }
 

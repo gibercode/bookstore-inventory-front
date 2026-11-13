@@ -7,6 +7,7 @@ type ModalProps = {
   title: string;
   onClose: () => void;
   dismissible?: boolean;
+  size?: "md" | "sm";
   children: ReactNode;
 };
 
@@ -14,6 +15,7 @@ export const Modal = ({
   title,
   onClose,
   dismissible = true,
+  size = "md",
   children,
 }: ModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -31,7 +33,7 @@ export const Modal = ({
   return (
     <dialog
       ref={dialogRef}
-      className={styles.dialog}
+      className={`${styles.dialog} ${size === "sm" ? styles.small : ''}`}
       aria-labelledby={titleId}
       onClick={handleBackdropClick}
       onCancel={(event) => {
