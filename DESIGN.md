@@ -1,55 +1,51 @@
-# Diseño: «Librería de lomo»
+# Diseño: Librook
 
-Ficha de catálogo de biblioteca llevada a una pantalla de trabajo: papel cálido, tinta oscura, filas densas separadas por líneas finas. Solo modo claro, solo escritorio.
+Dashboard minimalista y premium, replicado de una referencia SaaS: sidebar blanca con íconos, tarjetas de métricas, filtros en chip, tabla dentro de una tarjeta suave, estados en píldora y paginación numerada. Solo modo claro, solo escritorio.
 
 Los valores viven en `src/styles/tokens.css`; este documento explica las reglas.
-
-## Referencias
-
-- **Are.na:** líneas de 1px, radio 0, sin sombras, densidad alta, mono para etiquetas y conteos, búsqueda como protagonista.
-- **Readwise:** papel crema en vez de blanco, tinta cálida en vez de negro, serif para títulos sobre sans para el cuerpo.
-- **Fitzcarraldo / NYRB:** tipografía y color hacen el trabajo; nada decorativo.
 
 ## Color
 
 | Rol | Token | Valor |
 |---|---|---|
-| Papel (fondo) | `--paper` | `#f4efe6` |
-| Superficie | `--surface` | `#fbf8f2` |
-| Tinta | `--ink` | `#1d1a16` |
-| Texto secundario | `--ink-muted` | `#5f574c` |
-| Línea | `--line` | `rgba(40,30,20,.16)` |
-| Acción (verde botella) | `--action` | `#1f4d3a` |
-| Stock disponible / bajo / agotado | `--stock-ok` / `--stock-low` / `--stock-out` | `#2f6b4f` / `#8a5a00` / `#9c3a22` |
+| Fondo de la app | `--bg` | `#f8fafc` |
+| Superficie (sidebar, tarjetas) | `--surface` | `#ffffff` |
+| Texto | `--ink` / `--ink-soft` / `--ink-muted` | `#111827` / `#475569` / `#6b7280` |
+| Línea | `--line` / `--line-strong` | `#eef0f4` / `#e2e8f0` |
+| Acción (esmeralda) | `--action` | `#059669` |
+| Disponible | `--stock-ok` | `#15803d` sobre `#dcfce7` |
+| Bajo | `--stock-low` | `#1d4ed8` sobre `#dbeafe` |
+| Agotado | `--stock-out` | `#b91c1c` sobre `#fee2e2` |
 
 Reglas:
-- El verde botella es el único color de acción: botones primarios, enlaces, foco. No se usa para decorar.
+- Fondo frío y casi blanco. Nada de tonos cálidos, amarillos ni ocres.
+- El esmeralda es el único color de acción: ítem activo, botón primario, página actual, enlaces.
 - El estado de stock siempre lleva texto además de color.
-- Contrastes estimados en AA; verificar con una herramienta antes de cerrar.
+- El esmeralda de la referencia (`#10b981`) no alcanza AA con texto blanco; se usa `#059669` (≈3.8:1, aceptable solo en texto de 14px semibold). Verificar antes de cerrar.
 
 ## Tipografía
 
-- **Instrument Serif:** títulos de pantalla (`--text-xl` a `--text-2xl`). Nunca en tablas ni en controles.
-- **Geist:** UI y cuerpo, 14px por defecto, pesos 400 y 500.
-- **Geist Mono:** ISBN, SKU, cantidades, precios, fechas. Con `font-variant-numeric: tabular-nums`.
-
-Las fuentes se cargan self-hosted (pendiente: `@fontsource-variable/geist`, `@fontsource-variable/geist-mono`, `@fontsource/instrument-serif`).
+- **Inter** (variable, self-hosted con `@fontsource`) para todo.
+- Cuerpo 14px. Título de pantalla 26px / 600. Cifras de tarjeta 30px / 700, `tabular-nums`.
+- Encabezados de tabla 13px / 600. Etiquetas de sección 11px en mayúsculas.
 
 ## Forma y estructura
 
-- Radio 0 en todo. Sin sombras, sin degradados.
-- La jerarquía la dan las líneas de 1px (`--hairline`) y el tinte de fondo en hover.
-- Foco: contorno de 2px en `--focus`.
-- Movimiento: solo color, 120ms. Respetar `prefers-reduced-motion`.
-- Layout: sidebar fija de 220px, topbar de 48px, contenido hasta 1440px.
+- Radios: 10 a 12px en controles, 18 a 20px en tarjetas, píldora en estados.
+- Sombras suaves de una capa, solo en tarjetas, chips y botones. Sin degradados.
+- Sidebar de 240px, contenido hasta 1440px, espaciado base de 4px.
+- Foco visible de 2px. Movimiento: solo color, 120ms; respetar `prefers-reduced-motion`.
 
-## Componentes clave (por diseñar)
+## Componentes
 
-- **Tabla de libros:** vista principal, filas densas, columnas numéricas en mono alineadas a la derecha.
-- **Vista de lomos:** alternativa a la tabla; el color del lomo sale de la portada o de la categoría.
-- **Buscador:** siempre visible en la topbar y protagonista en Libros.
-- **StockBadge:** texto en mono con fondo tintado, sin borde redondeado.
+- **Sidebar:** logo Librook, sección «Principal», ítem activo con fondo `--action-soft`. Solo hay «Libros» porque es la única pantalla.
+- **StatCard:** etiqueta, ícono en círculo tintado, cifra grande, píldora y texto de apoyo. Solo datos reales de la API.
+- **Filtros:** solo los que tienen endpoint: categoría y stock bajo. Cada uno es un endpoint distinto, así que son excluyentes (uno a la vez).
+- **Tarjeta de tabla:** título a la izquierda y «Ordenar por» a la derecha (solo sin filtro, porque `/search/` y `/low-stock/` no aceptan `ordering`).
+- **Tabla:** cabecera tintada y redondeada, filas de 60px, categoría con punto de color.
+- **StockBadge:** píldora con cantidad y estado.
+- **Paginación:** botones numerados alineados a la derecha, página actual en esmeralda.
 
 ## Evitar
 
-Morado o azul con degradados, tarjetas con sombra y esquinas redondas, íconos de libro decorativos, ilustraciones, hero, Inter por defecto.
+Tonos ocre, amarillos o cálidos, gradientes, métricas o variaciones inventadas, ilustraciones, hero, botones sin acción real.

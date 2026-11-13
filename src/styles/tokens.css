@@ -1,43 +1,49 @@
-/* Tokens del tema "Librería de lomo". Ver DESIGN.md.
-   Solo modo claro. No hardcodear colores fuera de este archivo. */
+/* Tokens del tema. Ver DESIGN.md. Solo modo claro.
+   No hardcodear colores fuera de este archivo. */
 
 :root {
-  /* Papel y tinta */
-  --paper: #f4efe6;
-  --surface: #fbf8f2;
-  --surface-sunken: #ece5d8;
-  --ink: #1d1a16;
-  --ink-muted: #5f574c;
-  --line: rgba(40, 30, 20, 0.16);
-  --line-strong: rgba(40, 30, 20, 0.42);
+  /* Superficies */
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --surface-hover: #f1f5f9;
 
-  /* Acción: verde botella (único color de acción) */
-  --action: #1f4d3a;
-  --action-hover: #173b2c;
-  --action-soft: #e1ebe4;
-  --on-action: #f4efe6;
-  --focus: #1f4d3a;
+  /* Texto */
+  --ink: #111827;
+  --ink-soft: #475569;
+  --ink-muted: #6b7280;
+
+  /* Líneas */
+  --line: #eef0f4;
+  --line-strong: #e2e8f0;
+
+  /* Acción: esmeralda */
+  --action: #059669;
+  --action-hover: #047857;
+  --action-soft: #ecfdf5;
+  --action-tint: #d1fae5;
+  --on-action: #ffffff;
+  --focus: #059669;
 
   /* Estado de stock (siempre con texto, nunca solo color) */
-  --stock-ok: #2f6b4f;
-  --stock-ok-bg: #e1ebe4;
-  --stock-low: #8a5a00;
-  --stock-low-bg: #f1e4c4;
-  --stock-out: #9c3a22;
-  --stock-out-bg: #f2d9d0;
+  --stock-ok: #15803d;
+  --stock-ok-bg: #dcfce7;
+  --stock-low: #1d4ed8;
+  --stock-low-bg: #dbeafe;
+  --stock-out: #b91c1c;
+  --stock-out-bg: #fee2e2;
 
   /* Tipografía */
-  --font-display: 'Instrument Serif', Georgia, serif;
-  --font-ui: 'Geist', system-ui, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+  --font-ui: 'Inter Variable', system-ui, sans-serif;
 
-  /* Escala de texto (denso, escritorio) */
+  /* Escala de texto */
   --text-xs: 0.6875rem; /* 11 */
   --text-sm: 0.8125rem; /* 13 */
   --text-md: 0.875rem; /* 14 cuerpo */
   --text-lg: 1rem; /* 16 */
-  --text-xl: 1.5rem; /* 24 */
-  --text-2xl: 2.25rem; /* 36 display */
+  --text-xl: 1.25rem; /* 20 */
+  --text-2xl: 1.625rem; /* 26 título de pantalla */
+  --text-3xl: 1.875rem; /* 30 cifras de tarjeta */
 
   /* Espaciado (base 4px) */
   --space-1: 4px;
@@ -48,13 +54,19 @@
   --space-6: 32px;
   --space-7: 48px;
 
-  /* Forma: sin radios ni sombras */
-  --radius: 0;
+  /* Forma */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
   --hairline: 1px solid var(--line);
+  --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-card:
+    0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px rgba(16, 24, 40, 0.04);
 
   /* Layout */
-  --sidebar-w: 220px;
-  --topbar-h: 48px;
+  --sidebar-w: 240px;
   --content-max: 1440px;
 
   /* Movimiento */

@@ -1,0 +1,25 @@
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  padding: var(--space-6) 0;
+}
+
+.title {
+  margin: 0;
+  font: 600 var(--text-lg) var(--font-ui);
+}
+
+.text {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+.error .title {
+  color: var(--stock-out);
+}
+
+.action {
+  margin-top: var(--space-3);
+}

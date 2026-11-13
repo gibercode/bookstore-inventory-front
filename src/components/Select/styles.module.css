@@ -1,0 +1,51 @@
+.field {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.select {
+  height: 40px;
+  min-width: 132px;
+  padding: 0 var(--space-6) 0 var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  font: 500 var(--text-md) var(--font-ui);
+  appearance: none;
+  cursor: pointer;
+  transition: background-color var(--ease);
+}
+
+.select:hover {
+  background: var(--surface-hover);
+}
+
+.chevron {
+  position: absolute;
+  right: var(--space-3);
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+.active .select {
+  border-color: var(--action);
+  background: var(--action);
+  color: var(--on-action);
+}
+
+.active .select:hover {
+  border-color: var(--action-hover);
+  background: var(--action-hover);
+}
+
+.active .select option {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.active .chevron {
+  color: var(--on-action);
+}

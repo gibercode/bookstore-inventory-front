@@ -1,0 +1,68 @@
+.card {
+  padding: var(--space-5);
+  border: var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  margin: 0;
+  color: var(--ink-muted);
+  font: 400 var(--text-md) var(--font-ui);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+}
+
+.neutral {
+  background: var(--stock-ok-bg);
+  color: var(--stock-ok);
+}
+
+.warn {
+  background: var(--stock-low-bg);
+  color: var(--stock-low);
+}
+
+.danger {
+  background: var(--stock-out-bg);
+  color: var(--stock-out);
+}
+
+.value {
+  margin: var(--space-4) 0 var(--space-3);
+  font: 700 var(--text-3xl) / 1 var(--font-ui);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+}
+
+.pill {
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  font: 500 var(--text-sm) var(--font-ui);
+  white-space: nowrap;
+}
+
+.hint {
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+}

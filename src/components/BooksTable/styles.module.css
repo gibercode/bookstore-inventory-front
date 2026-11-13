@@ -1,0 +1,104 @@
+.wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--text-md);
+  transition: opacity var(--ease);
+}
+
+.refreshing {
+  opacity: 0.6;
+}
+
+.caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.table th,
+.table td {
+  padding: 0 var(--space-3);
+  height: 60px;
+  border-bottom: var(--hairline);
+  text-align: left;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.table thead th {
+  height: 44px;
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+  background: var(--surface-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.table thead th:first-child {
+  padding-left: var(--space-4);
+  border-left: var(--hairline);
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.table thead th:last-child {
+  border-right: var(--hairline);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.table tbody th:first-child {
+  padding-left: var(--space-4);
+}
+
+.table tbody tr {
+  transition: background-color var(--ease);
+}
+
+.table tbody tr:hover {
+  background: var(--surface-muted);
+}
+
+.title {
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.ellipsis {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.numbers {
+  font-variant-numeric: tabular-nums;
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background: var(--dot);
+}
+
+.skeleton {
+  display: block;
+  width: 70%;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-hover);
+}
