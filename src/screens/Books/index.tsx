@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
   AlertIcon,
-  Banner,
   BookFormModal,
   BooksIcon,
   BooksTable,
@@ -18,11 +17,12 @@ import {
   StatCard,
   TagIcon,
 } from '@/components'
-import { LOW_STOCK_THRESHOLD, PAGE_SIZE } from '@/constants/common'
+import { LOW_STOCK_THRESHOLD, PAGE_SIZE_OPTIONS } from '@/constants/common'
 import { useDisclosure } from '@/hooks/useDisclosure'
 import { useBooksStore } from '@/store/books'
 import { useCategoriesStore } from '@/store/categories'
 import { useStatsStore } from '@/store/stats'
+import { toast } from '@/store/toast'
 import type { BookFilter } from '@/types/book'
 import type { Category } from '@/types/category'
 import { formatInteger } from '@/utils/format'
@@ -50,6 +50,7 @@ export const Books = () => {
   const filter = useBooksStore((state) => state.filter)
   const ordering = useBooksStore((state) => state.ordering)
   const page = useBooksStore((state) => state.page)
+  const pageSize = useBooksStore((state) => state.pageSize)
   const fetchBooks = useBooksStore((state) => state.fetchBooks)
   const setCategoryFilter = useBooksStore((state) => state.setCategoryFilter)
   const toggleLowStockFilter = useBooksStore(
@@ -58,13 +59,14 @@ export const Books = () => {
   const clearFilter = useBooksStore((state) => state.clearFilter)
   const setOrdering = useBooksStore((state) => state.setOrdering)
   const setPage = useBooksStore((state) => state.setPage)
+  const setPageSize = useBooksStore((state) => state.setPageSize)
+  const createBook = useBooksStore((state) => state.createBook)
 
   const categories = useCategoriesStore((state) => state.categories)
   const categoriesStatus = useCategoriesStore((state) => state.status)
   const fetchCategories = useCategoriesStore((state) => state.fetchCategories)
 
   const createModal = useDisclosure()
-  const [createdTitle, setCreatedTitle] = useState<string | null>(null)
 
   const stats = useStatsStore()
   const { fetchStats } = stats
@@ -81,6 +83,9 @@ export const Books = () => {
   }
 
   const isLoading = status === 'loading' || status === 'idle'
+  const statsLoading = stats.status === 'loading' || stats.status === 'idle'
+  const categoriesLoading =
+    categoriesStatus === 'loading' || categoriesStatus === 'idle'
   const hasFilter = filter.kind !== 'none'
   const hasError = status === 'error'
   const isEmpty = status === 'success' && books.length === 0
@@ -96,8 +101,8 @@ export const Books = () => {
           </p>
         </div>
         <div className={styles.actions}>
-          <Button onClick={refresh} disabled={isLoading}>
-            <RefreshIcon size={16} />
+          <Button onClick={refresh} loading={isLoading}>
+            {!isLoading && <RefreshIcon size={16} />}
             Actualizar
           </Button>
           <Button variant="primary" onClick={createModal.open}>
@@ -107,16 +112,12 @@ export const Books = () => {
         </div>
       </header>
 
-      {createdTitle && (
-        <Banner onDismiss={() => setCreatedTitle(null)}>
-          Libro «{createdTitle}» creado.
-        </Banner>
-      )}
 
       <div className={styles.stats}>
         <StatCard
           label="Títulos"
           value={stats.total}
+          loading={statsLoading}
           pill={
             stats.total === null || stats.outOfStock === null
               ? undefined
@@ -128,12 +129,14 @@ export const Books = () => {
         <StatCard
           label="Categorías"
           value={categoriesStatus === 'success' ? categories.length : null}
+          loading={categoriesLoading}
           hint="registradas"
           icon={<TagIcon />}
         />
         <StatCard
           label="Stock bajo"
           value={stats.lowStock}
+          loading={statsLoading}
           pill={toPercent(stats.lowStock, stats.total)}
           hint={`${LOW_STOCK_THRESHOLD} unidades o menos`}
           icon={<AlertIcon />}
@@ -142,6 +145,7 @@ export const Books = () => {
         <StatCard
           label="Agotados"
           value={stats.outOfStock}
+          loading={statsLoading}
           pill={toPercent(stats.outOfStock, stats.total)}
           hint="sin existencias"
           icon={<BoxIcon />}
@@ -162,6 +166,7 @@ export const Books = () => {
         </p>
         <div className={styles.chips} role="group" aria-label="Filtros">
           <Select
+            disabled={categoriesLoading}
             label="Filtrar por categoría"
             active={filter.kind === 'category'}
             value={filter.kind === 'category' ? filter.categoryId : ''}
@@ -218,10 +223,12 @@ export const Books = () => {
             />
             <Pagination
               page={page}
-              pageSize={PAGE_SIZE}
+              pageSize={pageSize}
+            pageSizeOptions={PAGE_SIZE_OPTIONS}
               totalItems={totalItems}
               disabled={isLoading}
               onPageChange={setPage}
+            onPageSizeChange={setPageSize}
             />
           </>
         )}
@@ -230,9 +237,10 @@ export const Books = () => {
       {createModal.isOpen && (
         <BookFormModal
           onClose={createModal.close}
-          onCreated={(book) => {
+          onSubmit={createBook}
+          onSaved={(book) => {
             createModal.close()
-            setCreatedTitle(book.title)
+            toast.success(`Libro «${book.title}» creado.`)
           }}
         />
       )}

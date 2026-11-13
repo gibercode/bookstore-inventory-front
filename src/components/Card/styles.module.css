@@ -15,6 +15,10 @@
   padding: 0 var(--space-1);
 }
 
+.flush {
+  margin-bottom: 0;
+}
+
 .title {
   margin: 0;
   color: var(--ink-soft);

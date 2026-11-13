@@ -101,3 +101,37 @@ export const PlusIcon = (props: IconProps) => (
     <path d="M12 5v14M5 12h14" />
   </Icon>
 )
+
+export const ArrowLeftIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </Icon>
+)
+
+export const CalculatorIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <rect x="5" y="3" width="14" height="18" rx="2" />
+    <path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01" />
+  </Icon>
+)
+
+export const PencilIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z" />
+    <path d="m13.5 6.5 4 4" />
+  </Icon>
+)
+
+export const CheckCircleIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m8 12.5 2.8 2.8L16 9.5" />
+  </Icon>
+)
+
+export const XCircleIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m9 9 6 6M15 9l-6 6" />
+  </Icon>
+)

@@ -1,11 +1,17 @@
 import type { ReactNode } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { APP_NAME } from '@/constants/common'
 import { BooksIcon } from '../Icons'
+import { Toaster } from '../Toaster'
 import styles from './styles.module.css'
 
 type DashboardLayoutProps = { children: ReactNode }
 
-export const DashboardLayout = ({ children }: DashboardLayoutProps) => (
+export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const { pathname } = useLocation()
+  const isBooks = pathname === '/' || pathname.startsWith('/books')
+
+  return (
   <div className={styles.layout}>
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
@@ -16,12 +22,18 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => (
       </div>
       <p className={styles.section}>Principal</p>
       <nav aria-label="Principal">
-        <a href="/" className={styles.link} aria-current="page">
+        <Link
+          to="/"
+          className={styles.link}
+          aria-current={isBooks ? 'page' : undefined}
+        >
           <BooksIcon size={20} />
           Libros
-        </a>
+        </Link>
       </nav>
     </aside>
     <main className={styles.main}>{children}</main>
+    <Toaster />
   </div>
-)
+  )
+}

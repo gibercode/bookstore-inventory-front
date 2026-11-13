@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { LOW_STOCK_THRESHOLD, PAGE_SIZE } from "@/constants/common";
 import type { Paginated, RequestStatus } from "@/types/api";
-import type { Book, BookFilter, BookOrdering, NewBook } from "@/types/book";
+import type { Book, BookFilter, BookOrdering, BookPayload } from "@/types/book";
 import { fetchService, isAbortError } from "@/utils/fetchService";
 import { useStatsStore } from "./stats";
 
@@ -13,6 +13,7 @@ type BooksStore = {
   filter: BookFilter;
   ordering: BookOrdering;
   page: number;
+  pageSize: number;
 
   fetchBooks: () => Promise<void>;
   setCategoryFilter: (categoryId: string) => void;
@@ -20,7 +21,8 @@ type BooksStore = {
   clearFilter: () => void;
   setOrdering: (ordering: BookOrdering) => void;
   setPage: (page: number) => void;
-  createBook: (payload: NewBook) => Promise<Book>;
+  setPageSize: (pageSize: number) => void;
+  createBook: (payload: BookPayload) => Promise<Book>;
 };
 
 const NO_FILTER: BookFilter = { kind: "none" };
@@ -31,8 +33,9 @@ const buildRequest = (
   filter: BookFilter,
   ordering: BookOrdering,
   page: number,
+  pageSize: number,
 ) => {
-  const base = { page, page_size: PAGE_SIZE };
+  const base = { page, page_size: pageSize };
   switch (filter.kind) {
     case "category":
       return {
@@ -63,14 +66,15 @@ export const useBooksStore = create<BooksStore>((set, get) => {
     filter: NO_FILTER,
     ordering: "title",
     page: 1,
+    pageSize: PAGE_SIZE,
 
     fetchBooks: async () => {
       controller?.abort();
       const current = new AbortController();
       controller = current;
 
-      const { filter, ordering, page } = get();
-      const { path, params } = buildRequest(filter, ordering, page);
+      const { filter, ordering, page, pageSize } = get();
+      const { path, params } = buildRequest(filter, ordering, page, pageSize);
       set({ status: "loading", error: null });
 
       try {
@@ -105,8 +109,8 @@ export const useBooksStore = create<BooksStore>((set, get) => {
 
     setPage: (page) => void applyAndFetch({ page }),
 
-    // Tras crear se vuelve al listado general (sin filtro, página 1) para que
-    // el libro nuevo sea visible, y se refrescan las métricas.
+    setPageSize: (pageSize) => void applyAndFetch({ pageSize }),
+
     createBook: async (payload) => {
       const book = await fetchService.post<Book>("/books/", payload);
       void applyAndFetch({ filter: NO_FILTER });

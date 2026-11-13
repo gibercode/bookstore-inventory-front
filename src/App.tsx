@@ -1,10 +1,5 @@
-import { DashboardLayout } from '@/components'
-import { Books } from '@/screens/Books'
+import { AppRouter } from './router'
 
-const App = () => (
-  <DashboardLayout>
-    <Books />
-  </DashboardLayout>
-)
+const App = () => <AppRouter />
 
 export default App

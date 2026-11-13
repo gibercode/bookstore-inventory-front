@@ -102,3 +102,17 @@
   border-radius: var(--radius-pill);
   background: var(--surface-hover);
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.clickable:hover .titleLink,
+.titleLink:focus-visible {
+  color: var(--action);
+}

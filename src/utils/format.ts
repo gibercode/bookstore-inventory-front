@@ -42,3 +42,15 @@ export const getCategoryColor = (seed: string) => {
   for (const char of seed) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
   return CATEGORY_COLORS[hash % CATEGORY_COLORS.length];
 };
+
+const dateTime = new Intl.DateTimeFormat("es", {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
+
+const rate = new Intl.NumberFormat("en-US", { maximumFractionDigits: 4 });
+
+export const formatDateTime = (value: string) =>
+  dateTime.format(new Date(value));
+
+export const formatRate = (value: number) => rate.format(value);

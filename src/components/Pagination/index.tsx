@@ -1,4 +1,6 @@
+import { formatInteger } from "@/utils/format";
 import {
+  ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsLeftIcon,
@@ -10,8 +12,10 @@ type PaginationProps = {
   page: number;
   pageSize: number;
   totalItems: number;
+  pageSizeOptions: number[];
   disabled?: boolean;
   onPageChange: (page: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
 };
 
 const getPageItems = (page: number, totalPages: number) => {
@@ -32,15 +36,43 @@ export const Pagination = ({
   page,
   pageSize,
   totalItems,
+  pageSizeOptions,
   disabled,
   onPageChange,
+  onPageSizeChange,
 }: PaginationProps) => {
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const from = totalItems === 0 ? 0 : (page - 1) * pageSize + 1;
+  const to = Math.min(page * pageSize, totalItems);
   const atStart = page <= 1;
   const atEnd = page >= totalPages;
 
   return (
     <nav className={styles.pagination} aria-label="Paginación">
+      <div className={styles.size}>
+        <label className={styles.sizeLabel}>
+          Mostrar
+          <span className={styles.sizeControl}>
+            <select
+              className={styles.sizeSelect}
+              value={pageSize}
+              disabled={disabled}
+              onChange={(event) => onPageSizeChange(Number(event.target.value))}
+            >
+              {pageSizeOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <ChevronDownIcon size={14} className={styles.sizeChevron} />
+          </span>
+          por página
+        </label>
+        <span className={styles.range}>
+          {formatInteger(from)}–{formatInteger(to)} de {formatInteger(totalItems)}
+        </span>
+      </div>
       <div className={styles.controls}>
         <button
           type="button"

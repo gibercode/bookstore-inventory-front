@@ -28,7 +28,7 @@ export type BookFilter =
 
 export type StockLevel = "ok" | "low" | "out";
 
-export type NewBook = {
+export type BookPayload = {
   title: string
   author: string
   isbn: string
@@ -36,4 +36,16 @@ export type NewBook = {
   stock_quantity: number
   category: string
   supplier_country: string
+}
+
+export type PriceCalculation = {
+  book_id: string
+  cost_usd: number
+  exchange_rate: number
+  cost_local: number
+  margin_percentage: number
+  selling_price_local: number
+  currency: string
+  rate_source: 'api' | 'default'
+  calculation_timestamp: string
 }

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { formatInteger } from '@/utils/format'
+import { Skeleton } from '../Skeleton'
 import styles from './styles.module.css'
 
 type Tone = 'neutral' | 'warn' | 'danger'
@@ -7,6 +8,7 @@ type Tone = 'neutral' | 'warn' | 'danger'
 type StatCardProps = {
   label: string
   value: number | null
+  loading?: boolean
   hint: string
   pill?: string
   icon: ReactNode
@@ -16,6 +18,7 @@ type StatCardProps = {
 export const StatCard = ({
   label,
   value,
+  loading = false,
   hint,
   pill,
   icon,
@@ -26,7 +29,15 @@ export const StatCard = ({
       <h3 className={styles.label}>{label}</h3>
       <span className={`${styles.icon} ${styles[tone]}`}>{icon}</span>
     </div>
-    <p className={styles.value}>{value === null ? '—' : formatInteger(value)}</p>
+    <p className={styles.value} aria-busy={loading || undefined}>
+      {value !== null ? (
+        formatInteger(value)
+      ) : loading ? (
+        <Skeleton width="56px" height="28px" />
+      ) : (
+        '—'
+      )}
+    </p>
     <div className={styles.footer}>
       {pill && <span className={`${styles.pill} ${styles[tone]}`}>{pill}</span>}
       <span className={styles.hint}>{hint}</span>
