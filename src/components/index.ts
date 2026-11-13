@@ -1,3 +1,5 @@
+export { Banner } from './Banner'
+export { BookFormModal } from './BookFormModal'
 export { BooksTable } from './BooksTable'
 export { Button } from './Button'
 export { Card } from './Card'
@@ -7,6 +9,7 @@ export {
   BooksIcon,
   BoxIcon,
   FilterIcon,
+  PlusIcon,
   RefreshIcon,
   TagIcon,
 } from './Icons'

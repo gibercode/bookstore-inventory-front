@@ -11,6 +11,11 @@
   gap: var(--space-4);
 }
 
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
 .title {
   margin: 0;
   font: 600 var(--text-2xl) / 1.2 var(--font-ui);

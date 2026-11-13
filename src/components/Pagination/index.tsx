@@ -3,31 +3,30 @@ import {
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
-} from '../Icons'
-import styles from './styles.module.css'
+} from "../Icons";
+import styles from "./styles.module.css";
 
 type PaginationProps = {
-  page: number
-  pageSize: number
-  totalItems: number
-  disabled?: boolean
-  onPageChange: (page: number) => void
-}
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  disabled?: boolean;
+  onPageChange: (page: number) => void;
+};
 
-// 1 … 4 5 6 … 20: siempre primera y última, y una ventana alrededor de la actual.
 const getPageItems = (page: number, totalPages: number) => {
   if (totalPages <= 7) {
-    return Array.from({ length: totalPages }, (_, index) => index + 1)
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
   }
-  const items: (number | 'gap')[] = [1]
-  const start = Math.max(2, page - 1)
-  const end = Math.min(totalPages - 1, page + 1)
-  if (start > 2) items.push('gap')
-  for (let value = start; value <= end; value += 1) items.push(value)
-  if (end < totalPages - 1) items.push('gap')
-  items.push(totalPages)
-  return items
-}
+  const items: (number | "gap")[] = [1];
+  const start = Math.max(2, page - 1);
+  const end = Math.min(totalPages - 1, page + 1);
+  if (start > 2) items.push("gap");
+  for (let value = start; value <= end; value += 1) items.push(value);
+  if (end < totalPages - 1) items.push("gap");
+  items.push(totalPages);
+  return items;
+};
 
 export const Pagination = ({
   page,
@@ -36,9 +35,9 @@ export const Pagination = ({
   disabled,
   onPageChange,
 }: PaginationProps) => {
-  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize))
-  const atStart = page <= 1
-  const atEnd = page >= totalPages
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const atStart = page <= 1;
+  const atEnd = page >= totalPages;
 
   return (
     <nav className={styles.pagination} aria-label="Paginación">
@@ -62,7 +61,7 @@ export const Pagination = ({
           <ChevronLeftIcon size={16} />
         </button>
         {getPageItems(page, totalPages).map((item, index) =>
-          item === 'gap' ? (
+          item === "gap" ? (
             <span key={`gap-${index}`} className={styles.gap}>
               …
             </span>
@@ -70,8 +69,8 @@ export const Pagination = ({
             <button
               key={item}
               type="button"
-              className={`${styles.item} ${item === page ? styles.current : ''}`}
-              aria-current={item === page ? 'page' : undefined}
+              className={`${styles.item} ${item === page ? styles.current : ""}`}
+              aria-current={item === page ? "page" : undefined}
               disabled={disabled}
               onClick={() => onPageChange(item)}
             >
@@ -99,5 +98,5 @@ export const Pagination = ({
         </button>
       </div>
     </nav>
-  )
-}
+  );
+};

@@ -1,6 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   AlertIcon,
+  Banner,
+  BookFormModal,
   BooksIcon,
   BooksTable,
   BoxIcon,
@@ -9,6 +11,7 @@ import {
   FilterIcon,
   Notice,
   Pagination,
+  PlusIcon,
   RefreshIcon,
   Select,
   SortSelect,
@@ -16,6 +19,7 @@ import {
   TagIcon,
 } from '@/components'
 import { LOW_STOCK_THRESHOLD, PAGE_SIZE } from '@/constants/common'
+import { useDisclosure } from '@/hooks/useDisclosure'
 import { useBooksStore } from '@/store/books'
 import { useCategoriesStore } from '@/store/categories'
 import { useStatsStore } from '@/store/stats'
@@ -59,6 +63,9 @@ export const Books = () => {
   const categoriesStatus = useCategoriesStore((state) => state.status)
   const fetchCategories = useCategoriesStore((state) => state.fetchCategories)
 
+  const createModal = useDisclosure()
+  const [createdTitle, setCreatedTitle] = useState<string | null>(null)
+
   const stats = useStatsStore()
   const { fetchStats } = stats
 
@@ -88,11 +95,23 @@ export const Books = () => {
             Consulta el catálogo y vigila las existencias de tu librería.
           </p>
         </div>
-        <Button onClick={refresh} disabled={isLoading}>
-          <RefreshIcon size={16} />
-          Actualizar
-        </Button>
+        <div className={styles.actions}>
+          <Button onClick={refresh} disabled={isLoading}>
+            <RefreshIcon size={16} />
+            Actualizar
+          </Button>
+          <Button variant="primary" onClick={createModal.open}>
+            <PlusIcon size={16} />
+            Nuevo libro
+          </Button>
+        </div>
       </header>
+
+      {createdTitle && (
+        <Banner onDismiss={() => setCreatedTitle(null)}>
+          Libro «{createdTitle}» creado.
+        </Banner>
+      )}
 
       <div className={styles.stats}>
         <StatCard
@@ -207,6 +226,16 @@ export const Books = () => {
           </>
         )}
       </Card>
+
+      {createModal.isOpen && (
+        <BookFormModal
+          onClose={createModal.close}
+          onCreated={(book) => {
+            createModal.close()
+            setCreatedTitle(book.title)
+          }}
+        />
+      )}
     </div>
   )
 }

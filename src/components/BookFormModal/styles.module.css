@@ -1,0 +1,40 @@
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.retry {
+  margin-top: var(--space-1);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--action);
+  font: 500 var(--text-sm) var(--font-ui);
+  cursor: pointer;
+}
+
+.retry:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.serverError {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--stock-out-bg);
+  color: var(--stock-out);
+  font-size: var(--text-md);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
